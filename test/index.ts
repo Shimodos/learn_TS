@@ -7,36 +7,43 @@
 // 10, 0.5, 0.00001, -50, 4e10 числа
 // true, false буливые значения
 
-// const isBirthdayData: boolean = true;
-// let ageData: number = 40;
-// const userNameData: string = "Alex";
+const isBirthdayData: boolean = true;
+let ageData: number = 40;
+const userNameData: string = "Alex";
 
-// // function logBrtMsg(isBirthday: boolean, userName: string, age: number): string {
-// //     if (isBirthday) {
-// //         return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
-// //     } else {
-// //         return "Sorry"
-// //     }
-// // }
-
-let salary: number;
-salary = 500;
-
-const userData = '{"isBirthdayData": true, "ageData": 40, "userNameData": "Alex"}';
-
-const userObj: {
-	isBirthdayData: boolean;
-	userNameData: string;
-	ageData: number;
-} = JSON.parse(userData);
-console.log(userObj.smt);
-
-const logBrtMsg = (isBirthday: boolean, userName: string, age: number): string => {
-	if (isBirthday) {
-		return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
-	} else {
-		return "Sorry";
-	}
+const createError = (msg: string) => {
+	throw new Error(msg);
 };
 
+function logBrtMsg(isBirthday: boolean, userName: string, age: number): string {
+	if (isBirthday === true) {
+		return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
+	} else if (isBirthday === false) {
+		return "Too bad";
+	}
+	return createError("Error");
+}
+
+// let salary: number;
+// salary = 500;
+
+// const userData = '{"isBirthdayData": true, "ageData": 40, "userNameData": "Alex"}';
+
+// const userObj: {
+// 	isBirthdayData: boolean;
+// 	userNameData: string;
+// 	ageData: number;
+// } = JSON.parse(userData);
+// console.log(userObj.smt);
+
+// const logBrtMsg = (isBirthday: boolean, userName: string, age: number): string => {
+// 	if (isBirthday) {
+// 		return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
+// 	} else {
+// 		return "Sorry";
+// 	}
+// };
+
 logBrtMsg(isBirthdayData, userNameData, ageData);
+
+// const smth: never = null;
