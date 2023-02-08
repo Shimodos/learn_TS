@@ -1,49 +1,36 @@
-// let userName: string = "Alex";
-// // userName.isIntager();
-
-// userName = 5;
-
-// '', "", ``, Строка
-// 10, 0.5, 0.00001, -50, 4e10 числа
-// true, false буливые значения
-
 const isBirthdayData: boolean = true;
 let ageData: number = 40;
 const userNameData: string = "Alex";
+
+const userData = {
+	isBirthdayData: true,
+	ageData: 40,
+	userNameData: "Alex",
+	messages: {
+		error: "Error",
+	},
+};
 
 const createError = (msg: string) => {
 	throw new Error(msg);
 };
 
-function logBrtMsg(isBirthday: boolean, userName: string, age: number): string {
-	if (isBirthday === true) {
-		return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
-	} else if (isBirthday === false) {
-		return "Too bad";
+function logBrtMsg({
+	isBirthdayData,
+	userNameData,
+	ageData,
+	messages: { error },
+}: {
+	isBirthdayData: boolean;
+	userNameData: string;
+	ageData: number;
+	messages: { error: string };
+}): string {
+	if (isBirthdayData) {
+		return `Congrats ${userNameData.toUpperCase()}, age: ${ageData + 1}`;
+	} else {
+		return createError(error);
 	}
-	return createError("Error");
 }
 
-// let salary: number;
-// salary = 500;
-
-// const userData = '{"isBirthdayData": true, "ageData": 40, "userNameData": "Alex"}';
-
-// const userObj: {
-// 	isBirthdayData: boolean;
-// 	userNameData: string;
-// 	ageData: number;
-// } = JSON.parse(userData);
-// console.log(userObj.smt);
-
-// const logBrtMsg = (isBirthday: boolean, userName: string, age: number): string => {
-// 	if (isBirthday) {
-// 		return `Congrats ${userName.toUpperCase()}, age: ${age + 1}`;
-// 	} else {
-// 		return "Sorry";
-// 	}
-// };
-
-logBrtMsg(isBirthdayData, userNameData, ageData);
-
-// const smth: never = null;
+console.log(logBrtMsg(userData));
