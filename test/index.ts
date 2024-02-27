@@ -1,60 +1,50 @@
-const isBirthdayData: boolean = true;
-let ageData: number = 40;
-const userNameData: string = 'Alex';
+const message: string | number = 'Hello, world!';
+const messages: string[] | number[] = ['Hello', 'world'];
 
-const userData = {
-  isBirthdayData: true,
-  ageData: 40,
-  userNameData: 'Alex',
-  messages: {
-    error: 'Error',
-  },
-};
+// union type
+// function printMessage(value: string | number | boolean): void {
+//   if (typeof value === 'string' || typeof value === 'number') {
+//     console.log(value.toString());
+//   } else {
+//     console.log(value);
+//   }
+//   console.log(value);
+// }
 
-const userDataTuple: [boolean, number, ...string[]] = [true, 40, 'Alex', 'John', 'Ann']; // кортеж - массив с фиксированным количеством элементов
-// userDataTuple[3];
-// userDataTuple.push(5);
-// userDataTuple[3];
-
-const res = userDataTuple.map((t) => `${t} - done`);
-
-const [bthd, age, userName] = userDataTuple;
-
-const createError = (msg: string) => {
-  throw new Error(msg);
-};
-
-function logBrtMsg({
-  isBirthdayData,
-  userNameData,
-  ageData,
-  messages: { error },
-}: {
-  isBirthdayData: boolean;
-  userNameData: string;
-  ageData: number;
-  messages: { error: string };
-}): string {
-  if (isBirthdayData) {
-    return `Congrats ${userNameData.toUpperCase()}, age: ${ageData + 1}`;
+function printMessage(value: string[] | number | boolean): void {
+  if (Array.isArray(value)) {
+    value.forEach((v) => console.log(v));
+  } else if (typeof value === 'number') {
+    console.log(value.toFixed);
   } else {
-    return createError(error);
+    console.log(value);
   }
 }
 
-console.log(logBrtMsg(userData));
+printMessage(123);
 
-const departments: string[] = ['dev', 'design', 'marceting'];
+const printReadings = (a: string | number, b: number | boolean): void => {
+  if (a === b) {
+    console.log(a, b);
+  }
+};
 
-const department = departments[0];
+const printReadings2 = (a: number[] | string): void => {
+  console.log(a.slice(0, 3));
+};
 
-// departments.push(5);
-const report = departments.filter((d: string) => d !== 'dev').map((d: string) => `${d} - done`);
+const checkReading = (readings: { system: number } | { user: number }): void => {
+  if ('system' in readings) {
+    console.log(readings.system);
+  } else {
+    console.log(readings.user);
+  }
+};
 
-const nums: number[][] = [
-  [3, 4, 6],
-  [3, 4, 6],
-];
-
-const [first] = report;
-console.log(first);
+function logValue(x: string | Date) {
+  if (x instanceof Date) {
+    console.log(x.toUTCString());
+  } else {
+    console.log(x.toUpperCase());
+  }
+}
