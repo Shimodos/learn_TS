@@ -4,19 +4,20 @@ let msg: 'hello' = 'hello';
 
 msg = 'hello'; // OK
 
-const port3000: number = 3000;
-const port3001: number = 3001;
+const serverConfig: { protocol: 'http' | 'https'; port: 3000 | 3001 } = {
+  port: 3000,
+  protocol: 'https',
+};
 
-function startServer(protocol: 'http' | 'https', port: 3000 | 3001): 'Server started' {
-  if (port === 3000 || port === 3001) {
-    console.log(`Server started on ${protocol}://localhost:${port}`);
-  } else {
-    throw new Error('Invalid port');
-  }
+const startServer: (protocol: 'http' | 'https', port: 3000 | 3001) => string = (
+  protocol: 'http' | 'https',
+  port: 3000 | 3001,
+): 'Server started' => {
+  console.log(`Server started on ${protocol}://localhost:${port}`);
   return 'Server started';
-}
+};
 
-startServer('http', 3001); // OK
+startServer(serverConfig.protocol, serverConfig.port);
 
 type AnimationTimingFunction = 'ease' | 'ease-out' | 'ease-in'; // Псевдоним типа
 type AnimationID = string | number;
