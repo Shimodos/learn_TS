@@ -18,16 +18,19 @@ function startServer(protocol: 'http' | 'https', port: 3000 | 3001): 'Server sta
 
 startServer('http', 3001); // OK
 
+type AnimationTimingFunction = 'ease' | 'ease-out' | 'ease-in'; // Псевдоним типа
+type AnimationID = string | number;
+
 function createAnimation(
-  id: string | number,
+  id: AnimationID,
   animName: string,
-  timingFunc: 'ease' | 'ease-out' | 'ease-in' = 'ease',
+  timingFunc: AnimationTimingFunction = 'ease',
   duration: number,
   iterCount: 'infinite' | number,
 ): void {
   // const elem = document.getElementById(`#${id}`) as HTMLElement;
   // if (elem) {
-  console.log(`${animName} ${timingFunc} ${duration}s ${iterCount}`);
+  console.log(` ${animName} ${timingFunc} ${duration}s ${iterCount}`);
   // elem.style.animation = `${animName} ${timingFunc} ${duration}s ${iterCount}`;
   // }
 }
