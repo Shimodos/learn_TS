@@ -1,50 +1,35 @@
-const message: string | number = 'Hello, world!';
-const messages: string[] | number[] = ['Hello', 'world'];
+// Primitive literal type
 
-// union type
-// function printMessage(value: string | number | boolean): void {
-//   if (typeof value === 'string' || typeof value === 'number') {
-//     console.log(value.toString());
-//   } else {
-//     console.log(value);
-//   }
-//   console.log(value);
-// }
+let msg: 'hello' = 'hello';
 
-function printMessage(value: string[] | number | boolean): void {
-  if (Array.isArray(value)) {
-    value.forEach((v) => console.log(v));
-  } else if (typeof value === 'number') {
-    console.log(value.toFixed);
+msg = 'hello'; // OK
+
+const port3000: number = 3000;
+const port3001: number = 3001;
+
+function startServer(protocol: 'http' | 'https', port: 3000 | 3001): 'Server started' {
+  if (port === 3000 || port === 3001) {
+    console.log(`Server started on ${protocol}://localhost:${port}`);
   } else {
-    console.log(value);
+    throw new Error('Invalid port');
   }
+  return 'Server started';
 }
 
-printMessage(123);
+startServer('http', 3001); // OK
 
-const printReadings = (a: string | number, b: number | boolean): void => {
-  if (a === b) {
-    console.log(a, b);
-  }
-};
-
-const printReadings2 = (a: number[] | string): void => {
-  console.log(a.slice(0, 3));
-};
-
-const checkReading = (readings: { system: number } | { user: number }): void => {
-  if ('system' in readings) {
-    console.log(readings.system);
-  } else {
-    console.log(readings.user);
-  }
-};
-
-function logValue(x: string | Date) {
-  if (x instanceof Date) {
-    console.log(x.toUTCString());
-  } else {
-    console.log(x.toUpperCase());
-  }
+function createAnimation(
+  id: string | number,
+  animName: string,
+  timingFunc: 'ease' | 'ease-out' | 'ease-in' = 'ease',
+  duration: number,
+  iterCount: 'infinite' | number,
+): void {
+  // const elem = document.getElementById(`#${id}`) as HTMLElement;
+  // if (elem) {
+  console.log(`${animName} ${timingFunc} ${duration}s ${iterCount}`);
+  // elem.style.animation = `${animName} ${timingFunc} ${duration}s ${iterCount}`;
+  // }
 }
+
+createAnimation('id', 'fade', 'ease-in', 2, 'infinite'); // OK
