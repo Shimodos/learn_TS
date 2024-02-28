@@ -4,12 +4,27 @@ let msg: 'hello' = 'hello';
 
 msg = 'hello'; // OK
 
-const serverConfig: { protocol: 'http' | 'https'; port: 3000 | 3001 } = {
+type Config = { protocol: 'http' | 'https'; port: 3000 | 3001 };
+type Role = {
+  role: string;
+};
+type ConfigWithRole = Config & Role;
+
+const serverConfig: ConfigWithRole = {
   port: 3000,
   protocol: 'https',
+  role: 'admin',
 };
 
-const startServer: (protocol: 'http' | 'https', port: 3000 | 3001) => string = (
+const backupConfig: ConfigWithRole = {
+  port: 3001,
+  protocol: 'http',
+  role: 'user',
+};
+
+type StartFunction = (protocol: 'http' | 'https', port: 3000 | 3001) => string;
+
+const startServer: StartFunction = (
   protocol: 'http' | 'https',
   port: 3000 | 3001,
 ): 'Server started' => {
