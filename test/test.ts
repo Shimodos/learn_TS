@@ -1,23 +1,27 @@
-const serverConfig1: BasicConfig = {
-  port: 3000,
-  protocol: 'https',
-  // role: 'admin',
+type Protocol = 'http' | 'https';
+
+type Config = {
+  protocol: Protocol;
+  port: 3000 | 3001;
 };
 
-const backupConfig: BasicConfig = {
-  port: 3001,
+type Role = {
+  role: string;
+};
+
+type ConfigWithRole = Config & Role;
+
+const startNewServer: ConfigWithRole = {
   protocol: 'http',
+  port: 3000,
+  role: 'admin',
 };
 
-interface BasicConfig {
-  protocol: string;
-  port: number;
-}
-
-const startNewServer = (config: BasicConfig): 'Server started' => {
-  console.log(`Server started on ${config.protocol}://localhost:${config.port}`);
+const startServerNew: StartFunction = (
+  protocol: 'http' | 'https',
+  port: 3000 | 3001,
+  log: (msg: string) => void,
+): 'Server started' => {
+  log(`Server started on ${protocol}://localhost:${port}`);
   return 'Server started';
 };
-
-startNewServer(serverConfig1);
-startNewServer(backupConfig);

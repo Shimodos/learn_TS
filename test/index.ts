@@ -5,7 +5,7 @@ let msg: 'hello' = 'hello';
 msg = 'hello'; // OK
 
 // type Config = { protocol: 'http' | 'https'; port: 3000 | 3001 };
-interface Config {
+interface IConfig {
   protocol: 'http' | 'https';
   port: 3000 | 3001;
   log: (msg: string) => void;
@@ -15,16 +15,22 @@ interface Config {
 // };
 // type ConfigWithRole = Config & Role;
 
-interface Role {
+interface IRole {
   role: string;
 }
 
-interface ConfigWithRole extends Config, Role {}
+interface IConfig {
+  data: Date;
+}
 
-const serverConfig: ConfigWithRole = {
+interface IConfigWithRole extends IConfig, IRole {}
+
+const IConfigWithRole: IConfigWithRole = {
   port: 3000,
   protocol: 'https',
   role: 'admin',
+  data: new Date(),
+
   log: (msg: string): void => console.log(msg),
 };
 
@@ -48,8 +54,6 @@ const startServer: StartFunction = (
   log(`Server started on ${protocol}://localhost:${port}`);
   return 'Server started';
 };
-
-startServer(serverConfig.protocol, serverConfig.port, serverConfig.log);
 
 type AnimationTimingFunction = 'ease' | 'ease-out' | 'ease-in'; // Псевдоним типа
 type AnimationID = string | number;
