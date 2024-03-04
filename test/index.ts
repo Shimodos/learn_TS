@@ -1,22 +1,25 @@
-let salary: number;
-salary = 1000;
-
-interface UserData {
-  name: string;
+interface User {
+  login: string;
+  password: string;
   age: number;
-  city: string;
+  isDeleted?: boolean;
+  // address?: string;
+  address: string | undefined; // если поле обязательно, но может быть пустым
+  parents?: {
+    mother?: string;
+    father?: string;
+  };
 }
 
-const userData = '{"name": "John", "age": 30, "city": "New York"}';
+const user: User = {
+  login: 'user',
+  password: 'qwerty',
+  age: 25,
+  address: 'Kyiv',
+};
 
-const arr = ['123', 5, true];
+const dbName = 'users';
 
-const user: UserData = JSON.parse(userData);
-console.log(user.name);
-
-let isOk = true;
-let movement: boolean | string = false;
-
-if (isOk) {
-  movement = 'forward';
+function sentUserData(obj: User, db?: string): void {
+  console.log(obj.parents?.father?.toLowerCase(), db?.toLowerCase());
 }
