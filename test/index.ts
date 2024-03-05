@@ -1,31 +1,51 @@
-const TOP = 'Top';
-const BOTTOM = 'Bottom';
-const LEFT = 'Left';
-const RIGHT = 'Right';
+// let smth: unknown;
+// smth = 'Hello, World!';
 
-enum Direction {
-  TOP,
-  BOTTOM,
-  LEFT,
-  RIGHT,
+// let data: string[] = smth;
+// data.find((e) => e);
+
+// const someValue: unknown = 10
+// someValue.method()
+
+// function fetchData(data: unknown): void {
+//   if (typeof data === 'string') {
+//     console.log(data.toUpperCase());
+//   }
+// }
+
+const userData = '{"isBirthdayData": true ,"name": "John" , "age": 30}';
+
+function safePars(s: string): unknown {
+  return JSON.parse(s);
 }
 
-enum timingFunc {
-  EASE = 'ease',
-  EASE_IN = 'ease-in',
-  EASE_OUT = 'ease-out',
-}
+const data = safePars(userData);
 
-enum timingFuncB {
-  EASE = 1,
-  EASE_IN = 2,
-  EASE_OUT = EASE_IN + 1,
-}
-
-function frame(elem: string, dir: Direction, tFunc: timingFunc): void {
-  if (dir === Direction.RIGHT) {
-    console.log(tFunc);
+function transferData(d: unknown): void {
+  if (typeof d === 'string') {
+    console.log(d.toUpperCase());
+  } else if (typeof d === 'object' && d) {
+    console.log(data);
+  } else {
+    console.error('Wrong data type');
   }
 }
 
-frame('test', Direction.RIGHT, timingFunc.EASE_OUT);
+transferData(data);
+
+try {
+  if (1) {
+    throw new Error('Error');
+  }
+} catch (e) {
+  if (e instanceof Error) {
+    console.error(e.message);
+  } else if (typeof e === 'string') {
+    console.error(e);
+  }
+}
+
+type T0 = any | unknown; // any
+type T1 = number | unknown; // unknown Перекрывает другие типы
+type T2 = string & unknown;
+type T3 = unknown & any; // any
