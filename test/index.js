@@ -1,24 +1,29 @@
-// Primitive literal type
-var msg = 'hello';
-msg = 'hello'; // OK
-var port3000 = 3000;
-var port3001 = 3001;
-function startServer(protocol, port) {
-    if (port === 3000 || port === 3001) {
-        console.log("Server started on ".concat(protocol, "://localhost:").concat(port));
+var TOP = 'Top';
+var BOTTOM = 'Bottom';
+var LEFT = 'Left';
+var RIGHT = 'Right';
+var Direction;
+(function (Direction) {
+    Direction[Direction["TOP"] = 0] = "TOP";
+    Direction[Direction["BOTTOM"] = 1] = "BOTTOM";
+    Direction[Direction["LEFT"] = 2] = "LEFT";
+    Direction[Direction["RIGHT"] = 3] = "RIGHT";
+})(Direction || (Direction = {}));
+var timingFunc;
+(function (timingFunc) {
+    timingFunc["EASE"] = "ease";
+    timingFunc["EASE_IN"] = "ease-in";
+    timingFunc["EASE_OUT"] = "ease-out";
+})(timingFunc || (timingFunc = {}));
+var timingFuncB;
+(function (timingFuncB) {
+    timingFuncB[timingFuncB["EASE"] = 1] = "EASE";
+    timingFuncB[timingFuncB["EASE_IN"] = 2] = "EASE_IN";
+    timingFuncB[timingFuncB["EASE_OUT"] = 3] = "EASE_OUT";
+})(timingFuncB || (timingFuncB = {}));
+function frame(elem, dir, tFunc) {
+    if (dir === Direction.RIGHT) {
+        console.log(tFunc);
     }
-    else {
-        throw new Error('Invalid port');
-    }
-    return 'Server started';
 }
-startServer('http', 3001); // OK
-function createAnimation(id, animName, timingFunc, duration, iterCount) {
-    if (timingFunc === void 0) { timingFunc = 'ease'; }
-    // const elem = document.getElementById(`#${id}`) as HTMLElement;
-    // if (elem) {
-    console.log(" ".concat(animName, " ").concat(timingFunc, " ").concat(duration, "s ").concat(iterCount));
-    // elem.style.animation = `${animName} ${timingFunc} ${duration}s ${iterCount}`;
-    // }
-}
-createAnimation('id', 'fade', 'ease-in', 2, 'infinite'); // OK
+frame('test', Direction.RIGHT, timingFunc.EASE_OUT);

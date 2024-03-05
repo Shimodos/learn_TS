@@ -1,44 +1,31 @@
-interface User {
-  readonly login: string;
-  password: string;
-  age: number;
-  isDeleted?: boolean;
-  // address?: string;
-  address: string | undefined; // если поле обязательно, но может быть пустым
-  parents?: {
-    mother?: string;
-    father?: string;
-  };
+const TOP = 'Top';
+const BOTTOM = 'Bottom';
+const LEFT = 'Left';
+const RIGHT = 'Right';
+
+enum Direction {
+  TOP,
+  BOTTOM,
+  LEFT,
+  RIGHT,
 }
 
-const user: User = {
-  login: 'user',
-  password: 'qwerty',
-  age: 25,
-  address: 'Kyiv',
-};
-
-const userFreeze: Readonly<User> = {
-  login: 'user',
-  password: 'qwerty',
-  age: 25,
-  address: 'Kyiv',
-};
-
-userFreeze.password = 'admin';
-
-user.password = 'admin';
-
-const dbName = 'users';
-
-function sentUserData(obj: User, db?: string): void {
-  console.log(obj.parents?.father?.toLowerCase(), db?.toLowerCase());
+enum timingFunc {
+  EASE = 'ease',
+  EASE_IN = 'ease-in',
+  EASE_OUT = 'ease-out',
 }
 
-const basicPorts: ReadonlyArray<number> = [80, 443, 8080];
-basicPorts[0] = 5;
-basicPorts.push(3000);
+enum timingFuncB {
+  EASE = 1,
+  EASE_IN = 2,
+  EASE_OUT = EASE_IN + 1,
+}
 
-// const basicPorts: readonly [number, ...string[]] = [80, '443', '8080'];
-// basicPorts[0] = 5;
-// basicPorts.push(3000);
+function frame(elem: string, dir: Direction, tFunc: timingFunc): void {
+  if (dir === Direction.RIGHT) {
+    console.log(tFunc);
+  }
+}
+
+frame('test', Direction.RIGHT, timingFunc.EASE_OUT);
