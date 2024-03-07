@@ -1,15 +1,19 @@
-var fetchData = function (url, method) {
-    console.log(method);
-};
-var reqOptions = {
-    url: 'https://api.com',
-    // method: 'POST' as const, // its type is 'POST' not string
-    method: 'POST', // its type is 'POST' not string
-};
-// fetchData('qqq', 'POST');
-// fetchData(reqOptions.url, reqOptions.method);
-fetchData(reqOptions.url, reqOptions.method);
-var box = document.querySelector('.box');
-var input = document.querySelector('input');
-var someNumber = +input.value;
-console.log(someNumber * 2);
+function prinMsg(msg) {
+    if (Array.isArray(msg)) {
+        msg.forEach(function (m) { return console.log(m); });
+    }
+    else if (isNumber(msg)) {
+        console.log(msg);
+    }
+    else {
+        console.log(msg);
+    }
+    console.log(msg);
+}
+prinMsg(4);
+function isNumber(x) {
+    return typeof x === 'number';
+}
+function repairVeicle(veicle) {
+    console.log(veicle.engine);
+}
