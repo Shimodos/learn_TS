@@ -16,6 +16,7 @@ function isNumber(x: unknown): x is number {
 }
 
 interface Car {
+  name: 'car';
   engine: string;
   wheels: {
     count: number;
@@ -24,17 +25,50 @@ interface Car {
 }
 
 interface Ship {
+  name: 'ship';
   engine: string;
   sail: number;
 }
 
-function repairVeicle(veicle: Car | Ship): void {
-  if (isCar(veicle)) {
-    veicle.wheels.typr;
-  } else if (isShio(veicle)) {
-    veicle;
-  } else {
-    veicle; // never
+interface Airplane {
+  name: 'airplane';
+  engine: string;
+  wings: string;
+}
+
+interface SuperAirolane {
+  name: 'smth';
+  engine: string;
+  wings: string;
+}
+
+type Veicle = Car | Ship | Airplane | SuperAirolane;
+
+function repairVeicle(veicle: Veicle): void {
+  // if (isCar(veicle)) {
+  //   veicle.wheels.typr;
+  // } else if (isShio(veicle)) {
+  //   veicle;
+  // } else {
+  //   veicle.wings; // never
+  // }
+
+  switch (veicle.name) {
+    case 'car':
+      console.log(veicle.wheels);
+      break;
+    case 'ship':
+      console.log(veicle.sail);
+      break;
+    case 'airplane':
+      console.log(veicle.wings);
+      break;
+    case 'smth':
+      console.log(veicle.engine);
+      break;
+    default:
+      const smth: never = veicle;
+      console.log('Ooops!');
   }
 }
 
@@ -42,10 +76,10 @@ function repairVeicle(veicle: Car | Ship): void {
 //   return 'wheels' in car;
 // }
 
-function isCar(car: Car | Ship): car is Car {
+function isCar(car: Veicle): car is Car {
   return (car as Car).wheels.count !== undefined;
 }
 
-function isShio(ship: Car | Ship): ship is Ship {
+function isShio(ship: Veicle): ship is Ship {
   return 'sail' in ship;
 }
