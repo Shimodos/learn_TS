@@ -1,51 +1,18 @@
-interface Car {
-  name: 'car';
-  engine: string;
-  wheels: number;
+const box = document.querySelector('.box') as HTMLElement;
+const input = document.querySelector('input');
+const link = document.querySelector('a');
+const p = document.querySelector('.paragraf') as HTMLParagraphElement;
+const links = document.querySelectorAll('a');
+
+if (link) {
+  link.href = 'https://www.typescriptlang.org';
 }
 
-interface Ship {
-  name: 'ship';
-  engine: string;
-  sail: number;
-}
+input?.value;
 
-interface Airplane {
-  name: 'airplane';
-  engine: string;
-  wings: string;
-}
+const elem = document.createElement('div');
 
-interface ComplVeicle {
-  name: 'car' | 'ship' | 'airplane';
-  engine: string;
-  wheels?: number;
-  sail?: number;
-  wings?: string;
-}
-
-const car: ComplVeicle = {
-  name: 'car',
-  engine: 'V8',
-};
-
-type Veicle = Car | Ship | Airplane;
-
-function repairVeicle(veicle: ComplVeicle): void {
-  switch (veicle.name) {
-    case 'car':
-      console.log(veicle.wheels! * 4);
-      break;
-    case 'ship':
-      console.log(veicle.sail);
-      break;
-    case 'airplane':
-      console.log(veicle.wings);
-      break;
-    default:
-      // const smth: never = veicle;
-      console.log('Ooops!');
-  }
-}
-
-repairVeicle(car);
+link?.addEventListener('click', (event) => {
+  event.preventDefault();
+  console.log('Link clicked');
+});
