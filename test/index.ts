@@ -1,32 +1,51 @@
-interface Square {
-  side: number;
-  area: number;
+interface Car {
+  name: 'car';
+  engine: string;
+  wheels: number;
 }
 
-interface Rect {
-  a: number;
-  b: number;
-  area: number;
+interface Ship {
+  name: 'ship';
+  engine: string;
+  sail: number;
 }
 
-function calcArea(side: number): Square;
-function calcArea(a: number, b: number): Rect;
-function calcArea(a: number, b?: number): Square | Rect {
-  if (b) {
-    const rect: Rect = {
-      a,
-      b,
-      area: a * b,
-    };
-    return rect;
-  } else {
-    const square: Square = {
-      side: a,
-      area: a * a,
-    };
-    return square;
+interface Airplane {
+  name: 'airplane';
+  engine: string;
+  wings: string;
+}
+
+interface ComplVeicle {
+  name: 'car' | 'ship' | 'airplane';
+  engine: string;
+  wheels?: number;
+  sail?: number;
+  wings?: string;
+}
+
+const car: ComplVeicle = {
+  name: 'car',
+  engine: 'V8',
+};
+
+type Veicle = Car | Ship | Airplane;
+
+function repairVeicle(veicle: ComplVeicle): void {
+  switch (veicle.name) {
+    case 'car':
+      console.log(veicle.wheels! * 4);
+      break;
+    case 'ship':
+      console.log(veicle.sail);
+      break;
+    case 'airplane':
+      console.log(veicle.wings);
+      break;
+    default:
+      // const smth: never = veicle;
+      console.log('Ooops!');
   }
 }
 
-calcArea(5); // { side: 5, area: 25 }
-calcArea(5, 10); // { a: 5, b: 10, area: 50 }
+repairVeicle(car);
