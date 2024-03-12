@@ -1,20 +1,32 @@
-type voidFunc = () => void;
+function processingData<T>(data: T): T {
+  return data;
+}
 
-const retString: voidFunc = () => {
-  return 'hello';
+let res1 = processingData(1);
+let res2 = processingData('1');
+
+const num = 10;
+
+const res3 = processingData<number>(num);
+
+interface PrintUK {
+  design: number;
+}
+
+interface PrintUSA {
+  design: string;
+}
+
+interface Print<T> {
+  design: T;
+}
+
+const somePrint: Print<string> = {
+  design: '10',
 };
 
-const s = retString();
-console.log(s);
-
-const retNum: voidFunc = () => {
-  return 1;
+const someOthePrint: Print<number> = {
+  design: 10,
 };
 
-const n = retNum();
-console.log(n);
-
-const names = ['Alice', 'Bob', 'Eve'];
-const newArr = names.slice();
-
-names.forEach((name, i, arr) => arr.push('newName'));
+T U V S P K/V
