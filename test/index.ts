@@ -1,32 +1,39 @@
-function processingData<T>(data: T): T {
+function processingData<T, S>(data: T[], options: S): string {
+  data.length;
+  switch (typeof data) {
+    case 'string':
+      return `${data} + speed + ${options}`;
+      break;
+    case 'number':
+      return `${data} + speed + ${options}`;
+      break;
+    default:
+      return 'error';
+  }
+}
+
+let res1 = processingData([1], 'fast');
+let res2 = processingData(['1'], 'slow');
+const res3 = processingData<number, string>([10], 'fast');
+
+function processingData2<T>(data: T): T {
   return data;
 }
 
-let res1 = processingData(1);
-let res2 = processingData('1');
-
-const num = 10;
-
-const res3 = processingData<number>(num);
-
-interface PrintUK {
-  design: number;
+interface MyPosition {
+  <T>(data: T): T;
 }
 
-interface PrintUSA {
-  design: string;
+let newFunnc: MyPosition = processingData2;
+
+interface DataSever {
+  processingData: MyPosition; // <T>(data: T) => T; запрос типа функции
 }
 
-interface Print<T> {
-  design: T;
-}
-
-const somePrint: Print<string> = {
-  design: '10',
+const sever: DataSever = {
+  // processingData(data) {
+  //   console.log(data);
+  //   return data;
+  // }
+  processingData: processingData2,
 };
-
-const someOthePrint: Print<number> = {
-  design: 10,
-};
-
-T U V S P K/V
