@@ -1,39 +1,57 @@
-function processingData<T, S>(data: T[], options: S): string {
-  data.length;
-  switch (typeof data) {
-    case 'string':
-      return `${data} + speed + ${options}`;
-      break;
-    case 'number':
-      return `${data} + speed + ${options}`;
-      break;
-    default:
-      return 'error';
-  }
-}
-
-let res1 = processingData([1], 'fast');
-let res2 = processingData(['1'], 'slow');
-const res3 = processingData<number, string>([10], 'fast');
-
-function processingData2<T>(data: T): T {
-  return data;
-}
-
-interface MyPosition {
+interface ProcessingFn {
   <T>(data: T): T;
 }
 
-let newFunnc: MyPosition = processingData2;
-
-interface DataSever {
-  processingData: MyPosition; // <T>(data: T) => T; запрос типа функции
+function process<T>(data: T): T {
+  return data;
 }
 
-const sever: DataSever = {
-  // processingData(data) {
-  //   console.log(data);
-  //   return data;
-  // }
-  processingData: processingData2,
+let newFunc: ProcessingFn = process;
+
+type MyEvent<T> = T;
+
+const num: MyEvent<number> = 1;
+
+interface ParentsOfUser {
+  mother: string;
+  father: string;
+}
+
+interface User<ParentsData extends ParentsOfUser> {
+  login: string;
+  age: number;
+  parents: ParentsData;
+}
+
+const user: User<{ mother: string; father: string; married: boolean }> = {
+  login: 'admin',
+  age: 10,
+  parents: {
+    mother: 'Anna',
+    father: 'no name',
+    married: true,
+  },
 };
+
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+
+const data: OneOrMany<number[]> = [1, 2, 3];
+
+// const depositMoney = <T extends number | string>(amount: T): T => {
+//   console.log(`Deposited: ${amount}`);
+//   return amount;
+// };
+
+// depositMoney(100);
+// depositMoney('100');
+// depositMoney(true); // Error
+
+const depositMoney = (amount: number | string): number | string => {
+  console.log(`Deposited: ${amount}`);
+  return amount;
+};
+
+depositMoney(100);
+depositMoney('100');
+depositMoney(true); // Error
