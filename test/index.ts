@@ -1,57 +1,38 @@
-interface ProcessingFn {
-  <T>(data: T): T;
+class User<T, S> {
+  name: T;
+  age: S;
+
+  constructor(name: T, age: S) {
+    this.name = name;
+    this.age = age;
+  }
+
+  sayMyFullName<T>(surname: T): string {
+    if (typeof this.name !== 'string') {
+      return `${this.name}`;
+    } else {
+      return `${this.name} ${surname}`;
+    }
+  }
 }
 
-function process<T>(data: T): T {
-  return data;
+class AdminUser extends User<string, number> {
+  constructor(name: string, age: number) {
+    super(name, age);
+  }
+
+  sayMyFullName<T>(surname: T): string {
+    return `Admin: ${this.name} ${surname}`;
+  }
 }
 
-let newFunc: ProcessingFn = process;
+const ivan = new User('Ivan', 30);
+const alex = new User<string, number>('Alex', 25);
 
-type MyEvent<T> = T;
+const nameData = 'Ivan';
+const ageData = 30;
 
-const num: MyEvent<number> = 1;
+const ivan2 = new User<string, number>(nameData, ageData);
 
-interface ParentsOfUser {
-  mother: string;
-  father: string;
-}
-
-interface User<ParentsData extends ParentsOfUser> {
-  login: string;
-  age: number;
-  parents: ParentsData;
-}
-
-const user: User<{ mother: string; father: string; married: boolean }> = {
-  login: 'admin',
-  age: 10,
-  parents: {
-    mother: 'Anna',
-    father: 'no name',
-    married: true,
-  },
-};
-
-type OrNull<Type> = Type | null;
-type OneOrMany<Type> = Type | Type[];
-
-const data: OneOrMany<number[]> = [1, 2, 3];
-
-// const depositMoney = <T extends number | string>(amount: T): T => {
-//   console.log(`Deposited: ${amount}`);
-//   return amount;
-// };
-
-// depositMoney(100);
-// depositMoney('100');
-// depositMoney(true); // Error
-
-const depositMoney = (amount: number | string): number | string => {
-  console.log(`Deposited: ${amount}`);
-  return amount;
-};
-
-depositMoney(100);
-depositMoney('100');
-depositMoney(true); // Error
+console.log(ivan.sayMyFullName('Ivanov'));
+console.log(alex);
