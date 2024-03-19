@@ -1,31 +1,25 @@
-const arr: Array<number> = [1, 2, 3];
-const arr1: number[] = [1, 2, 3];
-
-const roarr: ReadonlyArray<string> = ['qwert'];
-// roarr[0] = 'reewq'; // error
-
-interface IState {
-  readonly data: {
-    name: string;
-  };
-  tag?: string;
+interface ICompany {
+  name: string;
+  dabts: number;
 }
 
-const state: Partial<IState> = {
-  data: {
-    name: 'John',
-  },
-};
+type CompanyKeys = keyof ICompany;
+const keys: CompanyKeys = 'dabts';
 
-const strictState: Required<IState> = {
-  data: {
-    name: 'Alex',
-  },
-  tag: 'test',
-};
-
-strictState.data = '2232';
-
-function action(state: Readonly<IState>) {
-  state.data.name = 'test';
+function printDebts<T, K extends keyof T, S extends keyof T>(company: T, name: K, dabts: S) {
+  console.log(`Company ${company[name]} has ${company[dabts]} debts`);
 }
+
+const hh: ICompany = {
+  name: 'hh',
+  dabts: 100,
+};
+
+printDebts(hh, 'name', 'dabts');
+
+const google = {
+  name: 'Google',
+  open: '1998',
+};
+
+printDebts(google, 'name', 'open');
