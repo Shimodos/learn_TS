@@ -17,9 +17,12 @@ const hh: ICompany = {
 
 printDebts(hh, 'name', 'dabts');
 
-const google = {
+const google: ICompany = {
   name: 'Google',
-  open: '1998',
+  dabts: 100,
 };
 
-printDebts(google, 'name', 'open');
+printDebts(google, 'name', 'dabts');
+
+type GoogleKeys = keyof typeof google;
+const keys2: GoogleKeys = 'dabts';
