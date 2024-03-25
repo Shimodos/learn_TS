@@ -1,56 +1,37 @@
-// Condition ? true : false
-// SomeType extends OtherType ? TrueType : FalseType
-
-const str: string = 'Hello';
-type Exempel = 'string' extends 'Hello' ? string : number; // number
-
-type FromUserOrFromBase<T extends string | number> = T extends string
-  ? IDataFromUser
-  : IDataFromBase;
-
-interface User<T extends 'created' | Date> {
-  created: T extends 'created' ? 'created' : Date;
-}
-
-const user: User<'created'> = {
-  created: 'created',
+type Currencies = {
+  usa: 'USD';
+  euro?: 'EUR';
+  yen: 'JPY';
+  readonly ukraine: 'UAH';
 };
 
-interface IDataFromUser {
-  weight: string;
-}
+type CreateCustomCurr<T> = {
+  -readonly [key in keyof T]-?: string;
+};
 
-interface IDataFromBase {
-  calories: number;
-}
-function calculateDalilyCalories(str: string): IDataFromUser;
-function calculateDalilyCalories(num: number): IDataFromBase;
-function calculateDalilyCalories<T extends string | number>(
-  numOrStr: T,
-): T extends string ? IDataFromUser : IDataFromBase {
-  if (typeof numOrStr === 'string') {
-    const obj: IDataFromUser = {
-      weight: numOrStr,
-    };
-    return obj as FromUserOrFromBase<T>;
-  } else {
-    const obj: IDataFromBase = {
-      calories: numOrStr,
-    };
-    return obj as FromUserOrFromBase<T>;
-  }
-}
+type CustomCurrencies = CreateCustomCurr<Currencies>;
 
-type GetStringType<T extends 'hello' | 'world' | string> = T extends 'hello'
-  ? 'hello'
-  : T extends 'world'
-  ? 'world'
-  : string;
+type ROnlyCurr = Readonly<Currencies>;
 
-type GetFirstType<T> = T extends Array<infer First> ? First : T;
+// type CustomCurencies = {
+//   usa: string;
+//   euro: string;
+//   yen: string;
+//   ukraine: string;
+// };
 
-type Ex = GetFirstType<number[]>;
+// type  СопоставимыйТип = {
+//   [ПроизвольныйИдентификатор in Множество] : ТипЗначения
+//  };
 
-type ToArray<Type> = Type extends any ? Type[] : never;
+type Keys = 'name' | 'age' | 'city';
 
-type StrArr = ToArray<Ex | string>; // паспределильные условные типы
+type User = {
+  [key in Keys]: string;
+};
+
+const alex: User = {
+  name: 'Alex',
+  age: '22',
+  city: 'Kiev',
+};
