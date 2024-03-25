@@ -1,37 +1,17 @@
 type Currencies = {
   usa: 'USD';
-  euro?: 'EUR';
+  euro: 'EUR';
   yen: 'JPY';
-  readonly ukraine: 'UAH';
+  ukraine: 'UAH';
 };
 
 type CreateCustomCurr<T> = {
-  -readonly [key in keyof T]-?: string;
+  [P in keyof T as `cutom${Capitalize<string & P>}`]: string;
 };
 
 type CustomCurrencies = CreateCustomCurr<Currencies>;
 
-type ROnlyCurr = Readonly<Currencies>;
+type MyAnimation = 'fade' | 'swipe';
+type Direction = 'In' | 'Out';
 
-// type CustomCurencies = {
-//   usa: string;
-//   euro: string;
-//   yen: string;
-//   ukraine: string;
-// };
-
-// type  СопоставимыйТип = {
-//   [ПроизвольныйИдентификатор in Множество] : ТипЗначения
-//  };
-
-type Keys = 'name' | 'age' | 'city';
-
-type User = {
-  [key in Keys]: string;
-};
-
-const alex: User = {
-  name: 'Alex',
-  age: '22',
-  city: 'Kiev',
-};
+type MyNewAnimation = `${MyAnimation}${Capitalize<Direction>}`;
