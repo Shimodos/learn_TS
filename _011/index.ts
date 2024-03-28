@@ -6,45 +6,39 @@
 // Простыми словами: при добавлении свойства в целевой объект они должны быть
 // автоматически добавлены в зависимые (сразу подсказка от TS)
 
-// Базовый тип для занятий
-type Class = {
+interface IFitnessClass {
   name: string;
-  startsAt?: string; // Необязательно, чтобы учесть futureClasses
+  startsAt: string;
   duration: number;
-  willStartsAt?: string; // Необязательно, чтобы учесть futureClasses
-};
+}
 
-// Базовый тип для клиентов
-type Client = {
+interface IFutureClass extends Omit<IFitnessClass, 'startsAt'> {
+  willStartsAt: string;
+}
+
+interface IClient {
   name: string;
-  age: string | number; // Чтобы учесть "-" для неизвестных возрастов
-  gender?: string; // Необязательно, чтобы учесть futureClients, где пол может не указываться
-  timeLeft?: string; // Необязательно, чтобы учесть exClients и futureClients
-  makeCallFor?: Date; // Специфично для exClients и futureClients
-};
+  age: number | string;
+  gender: 'male' | 'female';
+  timeLeft: string;
+  makeCallFor: Date;
+}
 
-// Расширение базовых типов классов и клиентов для будущих сценариев
-// Использование условных типов для дифференциации свойств на основе базовых типов
-type FutureClass = {
-  [K in keyof Class]: Class[K] extends string ? string : number;
-};
+type CurrClient = Omit<IClient, 'makeCallFor'>;
+type ExClient = Omit<IClient, 'timeLeft'>;
+type FutureClient = Pick<IClient, 'name' | 'makeCallFor'>;
 
-type FutureClient = {
-  [K in keyof Client]: Client[K] extends string ? string : Client[K] extends number ? number : Date;
-};
-
-// Объект фитнес-клуба с примененными типами
-type FitnessClubCenter = {
+interface IFitnessClubCenter {
   clubName: string;
   location: string;
-  classes: Class[];
-  futureClasses: FutureClass[];
-  currClients: Client[];
-  exClients: FutureClient[];
+  classes: IFitnessClass[];
+  futureClasses: IFutureClass[];
+  currClients: CurrClient[];
+  exClients: ExClient[];
   futureClients: FutureClient[];
-};
+}
 
-const fitnessClubCenter: FitnessClubCenter = {
+const fitnessClubCenter: IFitnessClubCenter = {
   clubName: 'Fitness club Center',
   location: 'central ave. 45, 5th floor',
   classes: [
