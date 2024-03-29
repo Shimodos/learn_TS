@@ -1,20 +1,41 @@
-function calculate(a: number, b: number): number {
-  return a + b;
+const jsonTest = '{"name": "John", "age": 30, "city": "New York"}';
+
+const obj = JSON.parse(jsonTest);
+
+let toDoList: ToDo[] = [];
+interface ToDo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
 }
 
-type CalculateRT = ReturnType<typeof calculate>;
+// fetch('https://jsonplaceholder.typicode.com/todos/1')
+//   .then((response) => response.json())
+//   .then((json) => {
+//     if ('id' in json) {
+//       toDoList.push(json);
+//     }
+//     console.log(toDoList);
+//   });
 
-let anotheRes: CalculateRT = 10;
+fetch('https://jsonplaceholder.typicode.com/todos')
+  .then((response) => response.json())
+  .then((json) => {
+    if ('id' in json && 'userId' in json && 'title' in json && 'completed' in json) {
+      toDoList.push(json);
+    } else if (Array.isArray(json)) {
+      toDoList = json;
+    } else {
+      console.log(`Error: ${json}`);
+    }
+    console.log(toDoList);
+  });
 
-type CalculateParams = Parameters<typeof calculate>;
-type PT1 = Parameters<(a: number) => number>;
-type PT2 = Parameters<<T>(arg: T) => number>;
+const promise = new Promise<string>((resolve, reject) => {
+  reject('This is an error');
+});
 
-class Example {
-  constructor(
-    public a: number,
-    public b: number,
-  ) {}
-}
-
-type T0 = ConstructorParameters<typeof Example>;
+promise.then((value) => {
+  console.log(value.toLowerCase());
+});
