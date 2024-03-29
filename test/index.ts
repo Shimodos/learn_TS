@@ -1,41 +1,18 @@
-const jsonTest = '{"name": "John", "age": 30, "city": "New York"}';
+type FromPromise = Awaited<Promise<number>>; // string
 
-const obj = JSON.parse(jsonTest);
-
-let toDoList: ToDo[] = [];
-interface ToDo {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
+interface User {
+  name: string;
+  age: number;
 }
 
-// fetch('https://jsonplaceholder.typicode.com/todos/1')
-//   .then((response) => response.json())
-//   .then((json) => {
-//     if ('id' in json) {
-//       toDoList.push(json);
-//     }
-//     console.log(toDoList);
-//   });
+async function getUser(): Promise<User[]> {
+  const users: User[] = [{ name: 'John', age: 30 }];
+  return users;
+}
 
-fetch('https://jsonplaceholder.typicode.com/todos')
-  .then((response) => response.json())
-  .then((json) => {
-    if ('id' in json && 'userId' in json && 'title' in json && 'completed' in json) {
-      toDoList.push(json);
-    } else if (Array.isArray(json)) {
-      toDoList = json;
-    } else {
-      console.log(`Error: ${json}`);
-    }
-    console.log(toDoList);
-  });
+const users = getUser(); // Promise<User[]>
 
-const promise = new Promise<string>((resolve, reject) => {
-  reject('This is an error');
-});
+type FetchUsersReturnType = Awaited<ReturnType<typeof getUser>>; // User[]
 
-promise.then((value) => {
-  console.log(value.toLowerCase());
-});
+type UnwrappedPromise<T> = T extends Promise<infer Return> ? Return : T;
+type UnwrappedPromiseType = UnwrappedPromise<ReturnType<typeof getUser>>; // User[]
