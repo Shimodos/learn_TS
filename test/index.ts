@@ -1,6 +1,19 @@
 class Box {
   width: number;
   height: number;
+  volume: string;
+
+  //   constructor(volume: string); // Overload
+  //   constructor(width: number); // Overload
+  //   constructor(widthOrVolume: number | string) {
+  //     if (typeof widthOrVolume === 'number') {
+  //       this.width = widthOrVolume;
+  //     } else {
+  //       this.volume = widthOrVolume;
+  //     }
+  //     this.height = 500;
+  //   }
+  // }
 
   constructor(width: number) {
     this.width = width;
