@@ -1,36 +1,61 @@
 class Box {
   width: number;
   height: number;
-  volume: string;
+  volume: number | undefined;
+  _content: string | undefined;
 
-  //   constructor(volume: string); // Overload
-  //   constructor(width: number); // Overload
-  //   constructor(widthOrVolume: number | string) {
-  //     if (typeof widthOrVolume === 'number') {
-  //       this.width = widthOrVolume;
-  //     } else {
-  //       this.volume = widthOrVolume;
-  //     }
-  //     this.height = 500;
-  //   }
-  // }
-
-  constructor(width: number) {
+  constructor(width: number, volume?: number, content?: string) {
     this.width = width;
+    this.volume = volume;
+    this._content = content;
     this.height = 500;
   }
+
+  calcVolume(): void {
+    if (!this.volume) {
+      this.volume = this.width * this.height;
+      console.log(`Volume is ${this.volume}`);
+    } else {
+      console.log(`Volume is ${this.volume}`);
+    }
+  }
+
+  // Overloading
+  checkBoxSize(transport: number): string;
+  checkBoxSize(transport: number[]): string;
+  checkBoxSize(transport: number | number[]): string {
+    if (typeof transport === 'number') {
+      return transport >= this.width ? 'Ok' : 'Not Ok';
+    } else {
+      return transport.some((item) => item >= this.width) ? 'Ok' : 'Not Ok';
+    }
+  }
+
+  get content() {
+    return this._content;
+  }
+
+  set content(value) {
+    this._content = `Data: ${new Date().toLocaleDateString()} - ${value}`;
+  }
+
+  // async getContent(value: string) {
+  //   const data = await new Date().toLocaleDateString();
+  //   this._content = `Data: ${data} - ${value}`;
+  // }
 }
 
 const firstBox = new Box(100);
+firstBox.volume = 1000;
+console.log((firstBox.content = 'Books'));
+console.log(firstBox.content);
 
-console.log(firstBox);
+// class User {
+//   name: string;
+//   age: number;
+// }
 
-class User {
-  name: string;
-  age: number;
-}
-
-const ivan = new User();
-ivan.name = 'Ivan';
-ivan.age = 25;
-console.log(ivan);
+// const ivan = new User();
+// ivan.name = 'Ivan';
+// ivan.age = 25;
+// console.log(ivan);
