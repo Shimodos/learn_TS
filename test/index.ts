@@ -1,6 +1,6 @@
 class Box {
   width: number;
-  height: number;
+  height: number = 500;
   volume: number | undefined;
   _content: string | undefined;
 
@@ -8,7 +8,6 @@ class Box {
     this.width = width;
     this.volume = volume;
     this._content = content;
-    this.height = 500;
   }
 
   calcVolume(): void {
@@ -59,3 +58,15 @@ console.log(firstBox.content);
 // ivan.name = 'Ivan';
 // ivan.age = 25;
 // console.log(ivan);
+
+class Styles {
+  [s: string]: string | ((s: string) => boolean);
+
+  method() {
+    console.log('Method');
+  }
+}
+
+const style = new Styles();
+style.color = 'red';
+style.fontSize = '16px';
