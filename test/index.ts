@@ -30,24 +30,52 @@ class Box {
     }
   }
 
-  get content() {
-    return this._content;
-  }
-
-  set content(value) {
-    this._content = `Data: ${new Date().toLocaleDateString()} - ${value}`;
-  }
-
-  // async getContent(value: string) {
-  //   const data = await new Date().toLocaleDateString();
-  //   this._content = `Data: ${data} - ${value}`;
+  // get content() {
+  //   return this._content;
   // }
+
+  // set content(value) {
+  //   this._content = `Data: ${new Date().toLocaleDateString()} - ${value}`;
+  // }
+
+  async getContent(value: string) {
+    const data = await new Date().toLocaleDateString();
+    this._content = `Data: ${data} - ${value}`;
+    console.log(this._content);
+    // return this._content;
+  }
 }
 
 const firstBox = new Box(100);
 firstBox.volume = 1000;
-console.log((firstBox.content = 'Books'));
-console.log(firstBox.content);
+// console.log((firstBox.content = 'Books'));
+// console.log(firstBox.content);
+
+class PresentBox extends Box {
+  wrap: string;
+  height: number = 300;
+
+  constructor(wrap: string, width: number) {
+    super(width);
+    this.wrap = wrap;
+  }
+
+  override async getContent(value: string, text?: string) {
+    const data = await new Date().toLocaleDateString();
+
+    if (!text) {
+      super.getContent(value);
+    } else {
+      text ? text : 'No text';
+    }
+
+    this._content = `Data: ${data} - ${value}, Text: ${text ? text : 'No text'}`;
+    console.log(this._content);
+    // return this._content;
+  }
+}
+
+new PresentBox('Red', 200).getContent('Books', 'Hello');
 
 // class User {
 //   name: string;
@@ -62,9 +90,9 @@ console.log(firstBox.content);
 class Styles {
   [s: string]: string | ((s: string) => boolean);
 
-  method() {
-    console.log('Method');
-  }
+  // method() {
+  //   console.log('Method');
+  // }
 }
 
 const style = new Styles();
