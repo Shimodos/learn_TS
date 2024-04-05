@@ -1,27 +1,23 @@
-type Protocol = 'http' | 'https';
+interface IUser {
+  login: string;
+  password: string;
+  token?: string;
+}
 
-type Config = {
-  protocol: Protocol;
-  port: 3000 | 3001;
-};
+interface IValidation {
+  validation: boolean;
+  isValid: (data: string) => boolean;
+}
 
-type Role = {
-  role: string;
-};
+class UserForm implements IUser, IValidation {
+  login: string;
+  password: string;
+  validation = false;
+  token?: string | undefined;
 
-type ConfigWithRole = Config & Role;
+  isValid(login: string) {
+    return login.length > 4;
+  }
+}
 
-const startNewServer: ConfigWithRole = {
-  protocol: 'http',
-  port: 3000,
-  role: 'admin',
-};
-
-const startServerNew: StartFunction = (
-  protocol: 'http' | 'https',
-  port: 3000 | 3001,
-  log: (msg: string) => void,
-): 'Server started' => {
-  log(`Server started on ${protocol}://localhost:${port}`);
-  return 'Server started';
-};
+new UserForm().isValid('test');
