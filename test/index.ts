@@ -1,8 +1,18 @@
+function setName() {
+  return 'Hello';
+}
+
 class Player {
+  private static game: string;
+
   #login: string;
   private _password: string;
   public server: string;
   protected consent: boolean;
+
+  static {
+    Player.game = setName();
+  }
 
   get password() {
     return this._password;
@@ -12,9 +22,16 @@ class Player {
     // Validation
     this._password = newPassword;
   }
+
+  static getGame() {
+    return Player.game;
+  }
 }
 
-const test = new Player();
+new Player();
+new Player();
+new Player();
+console.log(Player.getGame());
 
 class CompetitivePlayer extends Player {
   rank: number;
@@ -24,10 +41,10 @@ class CompetitivePlayer extends Player {
   }
 }
 
-const player = new CompetitivePlayer();
-player.password = 'qsz1';
-player.server = 'EU';
-player.rank = 1;
+// const player = new CompetitivePlayer();
+// player.password = 'qsz1';
+// player.server = 'EU';
+// player.rank = 1;
 
 // class User {
 //   public email: string;
