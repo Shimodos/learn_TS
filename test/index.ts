@@ -1,5 +1,5 @@
 class Player {
-  private login: string;
+  #login: string;
   private _password: string;
   public server: string;
   protected consent: boolean;
@@ -13,6 +13,8 @@ class Player {
     this._password = newPassword;
   }
 }
+
+const test = new Player();
 
 class CompetitivePlayer extends Player {
   rank: number;
