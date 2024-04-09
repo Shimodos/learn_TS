@@ -1,23 +1,23 @@
-interface IEngine {
-  model: string;
-  capacity: number;
-  startEngine: (time: Date) => string;
+const myCar = {
+  fule: '60%',
+  open: true,
+  freeSeats: 4,
+  isOpen() {
+    console.log(this.fule);
+    return this.open ? 'open' : 'closed';
+  },
+};
+
+function closeCare(car: typeof myCar) {
+  car.open = false;
+  console.log('Car is closed');
+  return car;
 }
 
-abstract class AbstractVechicle {
-  model: string;
-  capacity: number;
-  abstract startEngine: (time: Date) => string;
-  stopEngine(time: Date): string {
-    this.startEngine(time);
-    return `Engine stopped at ${time}`;
-  }
+function addFuel(car: typeof myCar) {
+  car.fule = '100%';
+  console.log('Car is full');
+  return car;
 }
 
-class Vechicle extends AbstractVechicle {
-  startEngine = (time: Date) => {
-    return `Engine started at ${time}`;
-  };
-}
-
-new Vechicle().startEngine(new Date());
+addFuel(closeCare(myCar)).isOpen();
