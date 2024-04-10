@@ -4,7 +4,8 @@ interface ICar {
   freeSeats: number;
 }
 
-@closeCare
+@changeDoorStatus(true)
+@changeAmountOfFuel(95)
 class myCar {
   fule: string = '60%';
   open: boolean = true;
@@ -16,12 +17,32 @@ class myCar {
   }
 }
 
-function closeCare<T extends { new (...args: any[]): {} }>(constructor: T) {
-  return class extends constructor {
-    open = false;
-    fule = '100%';
+function changeDoorStatus(status: boolean) {
+  console.log('door init');
+  return <T extends { new (...args: any[]): {} }>(constructor: T) => {
+    console.log('door changed');
+    return class extends constructor {
+      open = status;
+    };
   };
 }
+
+function changeAmountOfFuel(amount: number) {
+  console.log('fuel init');
+  return <T extends { new (...args: any[]): {} }>(constructor: T) => {
+    console.log('fuil changed');
+    return class extends constructor {
+      fule = `${amount}%`;
+    };
+  };
+}
+
+// function closeCare<T extends { new (...args: any[]): {} }>(constructor: T) {
+//   return class extends constructor {
+//     open = false;
+//     fule = '100%';
+//   };
+// }
 
 // function addFuel(car: myCar) {
 //   car.fule = '100%';
