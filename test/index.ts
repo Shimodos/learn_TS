@@ -4,44 +4,37 @@ interface ICar {
   freeSeats: number;
 }
 
-@changeDoorStatus(true)
+@changeDoorStatus(false)
 @changeAmountOfFuel(95)
 class myCar implements ICar {
   fule: string = '60%';
   open: boolean = true;
   freeSeats: number;
 
-  isOpen() {
-    console.log(this.fule);
-    return this.open ? 'open' : 'closed';
+  @checkAmountOfFuel
+  isOpen(value: string) {
+    return this.open ? 'open' : `closed ${value}`;
   }
 }
 
-// function changeDoorStatus(status: boolean) {
-//   console.log('door init');
-//   return <T extends { new (...args: any[]): {} }>(constructor: T) => {
-//     console.log('door changed');
-//     return class extends constructor {
-//       open = status;
-//     };
-//   };
-// }
+function checkAmountOfFuel(
+  target: Object,
+  propertyKey: string | symbol,
+  descriptor: PropertyDescriptor,
+): PropertyDescriptor | void {
+  const oldValue = descriptor.value;
+  descriptor.value = function (this: any, ...args: any[]) {
+    console.log(this.fule);
 
-// function changeAmountOfFuel(amount: number) {
-//   console.log('fuel init');
-//   return <T extends { new (...args: any[]): {} }>(constructor: T) => {
-//     console.log('fuil changed');
-//     return class extends constructor {
-//       fule = `${amount}%`;
-//     };
-//   };
-// }
+    return oldValue.apply(this, args);
+  };
+}
 
 function changeDoorStatus(status: boolean) {
   console.log('door init');
-  return <T extends { new (...args: any[]): {} }>(target: T, context: ClassDecoratorContext<T>) => {
+  return <T extends { new (...args: any[]): {} }>(constructor: T) => {
     console.log('door changed');
-    return class extends target {
+    return class extends constructor {
       open = status;
     };
   };
@@ -49,13 +42,33 @@ function changeDoorStatus(status: boolean) {
 
 function changeAmountOfFuel(amount: number) {
   console.log('fuel init');
-  return <T extends { new (...args: any[]): {} }>(target: T, context: ClassDecoratorContext<T>) => {
+  return <T extends { new (...args: any[]): {} }>(constructor: T) => {
     console.log('fuil changed');
-    return class extends target {
+    return class extends constructor {
       fule = `${amount}%`;
     };
   };
 }
+
+// function changeDoorStatus(status: boolean) {
+//   console.log('door init');
+//   return <T extends { new (...args: any[]): {} }>(target: T, context: ClassDecoratorContext<T>) => {
+//     console.log('door changed');
+//     return class extends target {
+//       open = status;
+//     };
+//   };
+// }
+
+// function changeAmountOfFuel(amount: number) {
+//   console.log('fuel init');
+//   return <T extends { new (...args: any[]): {} }>(target: T, context: ClassDecoratorContext<T>) => {
+//     console.log('fuil changed');
+//     return class extends target {
+//       fule = `${amount}%`;
+//     };
+//   };
+// }
 
 // function closeCare<T extends { new (...args: any[]): {} }>(constructor: T) {
 //   return class extends constructor {
@@ -71,4 +84,4 @@ function changeAmountOfFuel(amount: number) {
 // }
 
 const car = new myCar();
-console.log(car.isOpen());
+console.log(car.isOpen('check'));
