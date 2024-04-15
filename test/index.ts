@@ -12,48 +12,66 @@ interface ICar {
 class myCar implements ICar {
   fuel: string = '50%';
   open: boolean = true;
-  errors: any;
+  test: any;
+
+  // constructor(@limit() test: number) {
+  //   this.test = test;
+  // }
 
   @checkNumberOfSeats(4)
   freeSeats: number;
 
-  @checkAmountOfFuel
+  // @checkAmountOfFuel()
   isOpen(value: string) {
     return this.open ? 'open' : `close ${value}`;
   }
 
-  @validate
-  startTravel(@limit passengers: number) {
+  @validate()
+  startTravel(@limit() passengers: number) {
     console.log(`Started with ${passengers} passengers`);
   }
 }
 
-function limit(target: Object, propertyKey: string | symbol, parameterIndex: number) {
-  let limitedParametrs: number[] =
-    Reflect.getOwnMetadata(limitMetadataKey, target, propertyKey) || [];
-  limitedParametrs.push(parameterIndex);
-  Reflect.defineMetadata(limitMetadataKey, limitedParametrs, target, propertyKey);
+function limit() {
+  console.log('Init: Parameter Decorator');
+  return (target: Object, propertyKey: string | symbol, parameterIndex: number) => {
+    console.log('Call: Parameter Decorator');
+    let limitedParametrs: number[] =
+      Reflect.getOwnMetadata(limitMetadataKey, target, propertyKey) || [];
+    limitedParametrs.push(parameterIndex);
+    Reflect.defineMetadata(limitMetadataKey, limitedParametrs, target, propertyKey);
+  };
 }
 
-function validate(target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-  let method = descriptor.value;
+function validate() {
+  console.log('Init: Method Decorator');
+  return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    console.log('Call: Method Decorator');
+    let method = descriptor.value;
 
-  descriptor.value = function (...args: any) {
-    let limitedParametrs: number[] = Reflect.getOwnMetadata(limitMetadataKey, target, propertyKey);
+    descriptor.value = function (...args: any) {
+      let limitedParametrs: number[] = Reflect.getOwnMetadata(
+        limitMetadataKey,
+        target,
+        propertyKey,
+      );
 
-    if (limitedParametrs) {
-      for (let index of limitedParametrs) {
-        if (args[index] > 4) {
-          throw new Error('Нельзя больше 4х пассажиров');
+      if (limitedParametrs) {
+        for (let index of limitedParametrs) {
+          if (args[index] > 4) {
+            throw new Error('Нельзя больше 4х пассажиров');
+          }
         }
       }
-    }
-    return method?.apply(this, args);
+      return method?.apply(this, args);
+    };
   };
 }
 
 function checkNumberOfSeats(limit: number) {
+  console.log('Init: Property Decorator');
   return function (target: Object, propertyKey: string | symbol) {
+    console.log('Call: Property Decorator');
     let symbol = Symbol();
 
     const getter = function (this: any) {
@@ -78,20 +96,26 @@ function checkNumberOfSeats(limit: number) {
   };
 }
 
-function checkAmountOfFuel(
-  target: Object,
-  propertyKey: string | symbol,
-  descriptor: PropertyDescriptor,
-): PropertyDescriptor | void {
-  const oldValue = descriptor.value;
-  descriptor.value = function (this: any, ...args: any[]) {
-    console.log(this.fuel);
-    return oldValue.apply(this, args);
+function checkAmountOfFuel() {
+  console.log('Init: Method Decorator');
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor,
+  ): PropertyDescriptor | void => {
+    console.log('Call: Method Decorator');
+    const oldValue = descriptor.value;
+    descriptor.value = function (this: any, ...args: any[]) {
+      console.log(this.fuel);
+      return oldValue.apply(this, args);
+    };
   };
 }
 
 function changeDoorStatus(status: boolean) {
+  console.log('Init: Class Decorator Door');
   return <T extends { new (...args: any[]): {} }>(constructor: T) => {
+    console.log('Call: Class Decorator Door');
     return class extends constructor {
       open = status;
     };
@@ -99,7 +123,9 @@ function changeDoorStatus(status: boolean) {
 }
 
 function changeAmountOfFuel(amount: number) {
+  console.log('Init: Class Decorator Fuel');
   return <T extends { new (...args: any[]): {} }>(constructor: T) => {
+    console.log('Call: Class Decorator Fuel');
     return class extends constructor {
       fuel = `${amount}%`;
     };
