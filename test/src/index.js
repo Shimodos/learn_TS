@@ -14,11 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const limitMetadataKey = Symbol('limit');
-const styles1 = {
-    color: 'red',
-    fontSize: '16px',
-};
-const styles2 = styles1['color'];
 let myCar = class myCar {
     fuel = '50%';
     open = true;

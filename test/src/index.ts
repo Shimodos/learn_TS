@@ -1,6 +1,27 @@
 import 'reflect-metadata';
 const limitMetadataKey = Symbol('limit');
 
+// const folder = 'main';
+
+// switch (folder) {
+//   case 'main':
+//     const test = 'test';
+//     break;
+//   case 'test':
+//     return true;
+// }
+
+interface IStyles {
+  [style: string]: string;
+}
+
+const styles1: IStyles = {
+  color: 'red',
+  fontSize: '16px',
+};
+
+const styles2 = styles1['color'];
+
 interface ICar {
   fuel: string;
   open: boolean;
