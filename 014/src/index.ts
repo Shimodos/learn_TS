@@ -1,12 +1,5 @@
 import 'reflect-metadata';
-
-interface ICuboid {
-  width: number;
-  length: number;
-  height: number;
-  calcArea: (multiply?: number) => number;
-  calcVolume: (multiply?: number) => number;
-}
+import { type ICuboid, underFlow } from './ICuboid.js';
 
 @createdAt
 class ShippingContainer implements ICuboid {
@@ -111,7 +104,7 @@ function validate(target: any, propertyKey: string, value: any): boolean {
     Reflect.getMetadata('IsInt', target, propertyKey) &&
     (!Number.isInteger(value) || value !== parseInt(value))
   ) {
-    throw new Error(`Property ${propertyKey} should be an integer`);
+    throw new Error(underFlow);
   }
 
   if (

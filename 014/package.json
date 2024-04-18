@@ -8,6 +8,7 @@
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
     "reflect-metadata": "^0.2.2"
   }
